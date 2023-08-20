@@ -98,6 +98,9 @@ export default function bot(loop,db) {
           "d": null
         }))
         break;
+      case 7:
+        bot(loop,db)
+        break
       case 0:
         if (data.t==='INTERACTION_CREATE') {
           let interaction = data.d
