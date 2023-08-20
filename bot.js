@@ -76,7 +76,7 @@ export default function bot(loop,db) {
             d: {
               token: token,
               properties: {
-                os: "windows",
+                os: "linux",
                 browser: "whatever this shit is",
                 device: "whatever this shit is"
               },
