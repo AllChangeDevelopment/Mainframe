@@ -165,12 +165,12 @@ let roles =       await request(`/guilds/${person.interaction.guild_id}/members/
     {
       "type": "rich",
       "title": `Verification process`,
-      "description": `We have been unable to verify your account, so you will need to contact TFA support for further information. This message can be safely dismissed.`,
+      "description": `We have been unable to verify your account, so you will need to contact All Change support for further information. This message can be safely dismissed.`,
       "color": 0xff0000,
       "fields": [
         {
           "name": `Status`,
-          "value": `Contact TFA support`
+          "value": `Contact AC support`
         }
       ]
     }
