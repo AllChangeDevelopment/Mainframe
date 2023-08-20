@@ -1,5 +1,7 @@
 import WebSocket from 'ws'
 import fetch from 'node-fetch'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const nv = process.env['nv']
 const v = process.env['v']
