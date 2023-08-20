@@ -80,7 +80,7 @@ export default function bot(loop,db) {
                 browser: "whatever this shit is",
                 device: "whatever this shit is"
               },
-              intents: 3276543
+              intents: 33282
             }
           }))
           ident = true
