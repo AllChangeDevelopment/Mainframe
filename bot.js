@@ -119,7 +119,7 @@ export default function bot(loop,db) {
           "value": `Awaiting code input (${code})`
         }
       ],
-      "url": `https://roblox.com/games/14458182082/da-verification-thing`
+      "url": `https://www.roblox.com/games/14458182082/All-Change-Verification`
     }
   ],flags:64}}, false)
           }
@@ -150,8 +150,7 @@ console.log(await request(`/guilds/${data.d.guild_id}/members/${user.id}`,"PATCH
           "name": `Status`,
           "value": `Verification passed`
         }
-      ],
-      "url": `https://roblox.com/games/14458182082/da-verification-thing`
+      ]
     }
   ],flags:64}, false)  
 let roles =       await request(`/guilds/${person.interaction.guild_id}/members/${person.interaction.member.user.id}`,"GET",null)
@@ -170,8 +169,7 @@ let roles =       await request(`/guilds/${person.interaction.guild_id}/members/
           "name": `Status`,
           "value": `Contact TFA support`
         }
-      ],
-      "url": `https://roblox.com/games/14458182082/da-verification-thing`
+      ]
     }
   ],flags:64}, false)
     let roles =       await request(`/guilds/${person.interaction.guild_id}/members/${person.interaction.member.user.id}`,"GET",null)
