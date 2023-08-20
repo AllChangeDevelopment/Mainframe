@@ -122,7 +122,7 @@ export default function bot(loop,db) {
           "value": `Awaiting code input (${code})`
         }
       ],
-      "url": `https://www.roblox.com/games/14458182082/All-Change-Verification`
+      "url": `https://www.roblox.com/games/14422617464/Communications-Server-Eligibility`
     }
   ],flags:64}}, false)
           }
