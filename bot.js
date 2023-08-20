@@ -58,6 +58,7 @@ export default function bot(loop,db) {
   
   ws.on('message', async function message(data) {
     data = JSON.parse(data)
+    console.log(data)
     switch (data.op) {
       case 10:
         interval = data.d.heartbeat_interval
@@ -79,7 +80,7 @@ export default function bot(loop,db) {
                 browser: "whatever this shit is",
                 device: "whatever this shit is"
               },
-              intents: 3276799
+              intents: 3276543
             }
           }))
           ident = true
