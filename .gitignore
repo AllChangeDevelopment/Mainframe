@@ -1,0 +1,7 @@
+.config
+.replit
+replit.nix
+package-lock.json
+node_modules
+.upm
+secrets.env

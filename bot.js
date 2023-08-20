@@ -1,7 +1,7 @@
 import WebSocket from 'ws'
 import fetch from 'node-fetch'
 import dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({ path: './secrets.env' })
 
 const nv = process.env['nv']
 const v = process.env['v']
