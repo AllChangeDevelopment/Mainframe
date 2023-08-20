@@ -58,7 +58,7 @@ export default function bot(loop,db) {
   
   ws.on('message', async function message(data) {
     data = JSON.parse(data)
-    console.log(data)
+    if (process.env.log == "true") console.log(data)
     switch (data.op) {
       case 10:
         interval = data.d.heartbeat_interval
