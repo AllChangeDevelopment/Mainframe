@@ -103,6 +103,14 @@ export default function bot(loop,db) {
             }
           }))
           ident = true
+          request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
+            {
+              "type": "rich",
+              "title": `Gateway connection`,
+              "description": `Bot connected to gateway`,
+              "color": 0x0000ff
+            }
+          ]}, false)
         }
         setTimeout(() => {
           ws.send(JSON.stringify({
