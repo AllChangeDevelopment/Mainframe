@@ -48,6 +48,25 @@ export default function bot(loop,db) {
   ws.on('close', (code, reason) => {
     console.log("Code "+code)
     console.log(reason.toString())
+    request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
+    {
+      "type": "rich",
+      "title": `FATAL`,
+      "description": `Bot errored and shut down action required immediately`,
+      "color": 0xff0000,
+      "fields": [
+        {
+          "name": `Code`,
+          "value": code
+        },
+        {
+          "name": "Reason",
+          "value": reason.toString()
+        }
+      ]
+    }
+  ],"content": "<@688294866287198208> ACTION REQUIRED"}, false)  
+    process.exit()
   })
   
   ws.on('open', function open() {
@@ -98,8 +117,6 @@ export default function bot(loop,db) {
           "d": null
         }))
         break;
-      case 7:
-        process.exit()
       case 0:
         if (data.t==='INTERACTION_CREATE') {
           let interaction = data.d
