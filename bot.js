@@ -45,10 +45,10 @@ export default function bot(loop,db) {
     console.error(error)
   });
   
-  ws.on('close', (code, reason) => {
+  ws.on('close', async (code, reason) => {
     console.log("Code "+code)
     console.log(reason.toString())
-    request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
+console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
     {
       "type": "rich",
       "title": `FATAL`,
@@ -65,7 +65,7 @@ export default function bot(loop,db) {
         }
       ]
     }
-  ],"content": "<@688294866287198208> ACTION REQUIRED"}, false)  
+  ],"content": "<@688294866287198208> ACTION REQUIRED"}))  
     process.exit()
   })
   

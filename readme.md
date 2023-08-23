@@ -1,5 +1,8 @@
 # All Change Verifier
+
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/te9i.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+
+
 Repository for the **official** verification bot for the All Change Community, which verifies the user's age.
 
 ## How it works
