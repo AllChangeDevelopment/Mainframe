@@ -51,8 +51,8 @@ export default function bot(loop,db) {
 console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
     {
       "type": "rich",
-      "title": `FATAL`,
-      "description": `Bot errored and shut down action required immediately`,
+      "title": `ACV Fatal error`,
+      "description": `ACV has errored and will restart when available`,
       "color": 0xff0000,
       "fields": [
         {
@@ -65,7 +65,7 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
         }
       ]
     }
-  ],"content": "<@688294866287198208> ACTION REQUIRED"}))  
+  ],"content": "<@688294866287198208>"}))  
     process.exit()
   })
   
