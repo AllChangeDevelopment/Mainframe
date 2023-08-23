@@ -118,6 +118,18 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
             "d": null
           }))
         },interval)
+        ws.send(JSON.stringify({
+          "op": 3,
+          "d": {
+            "since": 91879201,
+            "activities": [{
+              "name": "roblox accounts",
+              "type": 3
+            }],
+            "status": "online",
+            "afk": false
+          }
+        }))
         break;
       case 1:
         ws.send(JSON.stringify({
