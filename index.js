@@ -1,6 +1,8 @@
 import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb'
-const uri = "mongodb+srv://ws:websocket@cluster0.wo5l2jp.mongodb.net/?retryWrites=true&w=majority";
+import dotenv from 'dotenv'
+dotenv.config({ path: './secrets.env' })
+const uri = `mongodb+srv://acv:${process.env.pass}@cluster0.wo5l2jp.mongodb.net/?retryWrites=true&w=majority`;
 import bot from './bot.js'
 import {EventEmitter} from 'events'
 const MessageLoop = new EventEmitter
@@ -37,5 +39,5 @@ app.post('/', async (req, res) => {
 
 app.listen(3000, () => {
   console.log('Express server initialized');
-  bot(MessageLoop,Db.collection("waiting"))
+  bot(MessageLoop,Db.collection("waiting"),Db.collection("logs"))
 });

@@ -7,6 +7,7 @@ const nv = process.env['nv']
 const v = process.env['v']
 const vf = process.env['vf']
 const token = process.env['token']
+const clientid = process.env['clientid']
 
 
 
@@ -39,7 +40,7 @@ const request = async (endpoint, method, body) => {
   return res} catch {}
 }
 
-export default function bot(loop,db) {
+export default function bot(loop,db,logs) {
   ws.on('error', error => {
     console.log("Error")
     console.error(error)
@@ -48,6 +49,7 @@ export default function bot(loop,db) {
   ws.on('close', async (code, reason) => {
     console.log("Code "+code)
     console.log(reason.toString())
+    logs.insertOne({code:code,reason:reason.toString,type:"close",timestamp:Date.now()})
 console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
     {
       "type": "rich",
@@ -70,6 +72,8 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
   })
   
   ws.on('open', function open() {
+        logs.insertOne({type:"open",timestamp:Date.now()})
+
   });
   
   let interval = 0
@@ -137,6 +141,8 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
           "d": null
         }))
         break;
+        // reconnect
+        
       case 0:
         if (data.t==='INTERACTION_CREATE') {
           let interaction = data.d
@@ -146,6 +152,9 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
               interaction: interaction,
               code: code
             })
+
+            logs.insertOne({user:interaction.member.user.username,code:code,type:"call_verify",timestamp:Date.now()})
+
             request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {type:4,data:{"embeds": [
     {
       "type": "rich",
@@ -165,7 +174,8 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
         }
         if (data.t==="GUILD_MEMBER_ADD") {
           let user = data.d.user
-console.log(await request(`/guilds/${data.d.guild_id}/members/${user.id}`,"PATCH",{roles:[nv]}))
+          logs.insertOne({user:user.username,type:"member_join",timestamp:Date.now()})
+          console.log(await request(`/guilds/${data.d.guild_id}/members/${user.id}`,"PATCH",{roles:[nv]}))
         }
     }
   });
@@ -177,8 +187,9 @@ console.log(await request(`/guilds/${data.d.guild_id}/members/${user.id}`,"PATCH
     let person = await db.findOne({code:msg.code})
     console.log(person)
     if (!person) return
-    if (msg.polling.includes("Discord")) { 
-      request(`/webhooks/1138208598116282489/${person.interaction.token}/messages/@original`,"PATCH",{"embeds": [
+    if (msg.polling.includes("Discord")) {
+      logs.insertOne({user:person.interaction.member.user.username,type:"pass",timestamp:Date.now()})
+      request(`/webhooks/${clientid}/${person.interaction.token}/messages/@original`,"PATCH",{"embeds": [
     {
       "type": "rich",
       "title": `Verification process`,
@@ -197,7 +208,10 @@ let roles =       await request(`/guilds/${person.interaction.guild_id}/members/
       roles[roles.indexOf(nv)] = v
       console.log(await request(`/guilds/${person.interaction.guild_id}/members/${person.interaction.member.user.id}`,"PATCH",{roles:roles}))
     }
-    else {request(`/webhooks/1138208598116282489/${person.interaction.token}/messages/@original`,"PATCH",{"embeds": [
+    else {
+            logs.insertOne({user:person.interaction.member.user.username,type:"fail",timestamp:Date.now()})
+
+      request(`/webhooks/${clientid}/${person.interaction.token}/messages/@original`,"PATCH",{"embeds": [
     {
       "type": "rich",
       "title": `Verification process`,
@@ -223,7 +237,7 @@ let roles =       await request(`/guilds/${person.interaction.guild_id}/members/
 
   
   loop.on('cmd', async cmd => {
-    request("/applications/1138208598116282489/commands","POST",cmd)
+    request(`/applications/${clientid}/commands`,"POST",cmd)
   })
 
 }
