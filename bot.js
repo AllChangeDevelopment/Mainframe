@@ -159,7 +159,7 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
     {
       "type": "rich",
       "title": `Verification process`,
-      "description": `To verify click the link above and enter the code ${code}. This one-time code is valid for 15 minutes. Do not share this code with anyone except the game above. Please don't dismiss this message as the next steps will be shown here. If you dismiss it by accident, you can always restart the process by running /verify again.`,
+      "description": `To verify, visit https://www.roblox.com/games/14664314958/Verification and enter the code ${code}. This one-time code is valid for 15 minutes. Do not share this code with anyone except the game above. Please don't dismiss this message as the next steps will be shown here. If you dismiss it by accident, you can always restart the process by running /verify again.`,
       "color": 0xff0000,
       "fields": [
         {
@@ -167,7 +167,7 @@ console.log(    await request(`/channels/873894045066346538/messages`,"POST",{"e
           "value": `Awaiting code input (${code})`
         }
       ],
-      "url": `https://www.roblox.com/games/14422617464/Communications-Server-Eligibility`
+      "url": `https://www.roblox.com/games/14664314958/Verification`
     }
   ],flags:64}}, false)
           }
