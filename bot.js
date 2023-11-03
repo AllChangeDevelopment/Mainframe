@@ -58,7 +58,64 @@ export default function bot(loop, db, logs, tasks) {
                     "name": `Code`, "value": code,
                 }, {
                     "name": "Reason", "value": reason.toString(),
-                }],
+                }]
+            }]
+        })
+    });
+  
+  let interval = 0
+  let ident = false
+  
+  ws.on('message', async function message(data) {
+    data = JSON.parse(data)
+    if (process.env.log === "true") console.log(data)
+    switch (data.op) {
+      case 10:
+        interval = data.d.heartbeat_interval
+        ws.send(JSON.stringify({
+          "op": 1,
+          "d": null
+        }))
+        ident = false
+        break;
+      case 11:
+        if (!ident) {
+          console.log("Identify")
+          ws.send(JSON.stringify({
+            op: 2,
+            d: {
+              token: token,
+              properties: {
+                os: "linux",
+                browser: "whatever this shit is",
+                device: "whatever this shit is"
+              },
+              intents: 33282
+            }
+          }))
+          ident = true
+          request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
+            {
+              "type": "rich",
+              "title": `Gateway connection`,
+              "description": `Bot connected to gateway`,
+              "color": 0x0000ff
+            }
+          ]}, false)
+        }
+        setTimeout(() => {
+          ws.send(JSON.stringify({
+            "op": 1,
+            "d": null
+          }))
+        },interval)
+        ws.send(JSON.stringify({
+          "op": 3,
+          "d": {
+            "since": 91879201,
+            "activities": [{
+              "name": "roblox accounts",
+              "type": 3
             }],
         }))
         process.exit()
