@@ -15,30 +15,31 @@ const link = "wss://gateway.discord.gg/?v=10&encoding=json"
 
 const ws = new WebSocket(link)
 
-const request = async (endpoint, method, body) => {
+const request = async (endpoint, method, body, headers={}) => {
     let req
     if (body !== null) {
         req = await fetch("https://discord.com/api/v10" + endpoint, {
             method: method, body: JSON.stringify(body), headers: {
-                "Content-Type": "application/json", "Authorization": "Bot " + token,
+                "Content-Type": "application/json", "Authorization": "Bot " + token, ...headers
             },
         })
     } else {
         req = await fetch("https://discord.com/api/v10" + endpoint, {
             method: method, headers: {
-                "Content-Type": "application/json", "Authorization": "Bot " + token,
+                "Content-Type": "application/json", "Authorization": "Bot " + token, ...headers
             },
         })
     }
     try {
         let res = await req.json()
-        console.log(res)
+        console.log(endpoint+" good body ig")
         return res
-    } catch {
+    } catch(err) {
+        console.log(endpoint+" shit body ig")
     }
 }
 
-export default function bot(loop, db, logs, tasks) {
+export default function bot(loop, db, logs, tasks, bans) {
     ws.on('error', error => {
         console.log("Error")
         console.error(error)
@@ -58,64 +59,7 @@ export default function bot(loop, db, logs, tasks) {
                     "name": `Code`, "value": code,
                 }, {
                     "name": "Reason", "value": reason.toString(),
-                }]
-            }]
-        })
-    });
-  
-  let interval = 0
-  let ident = false
-  
-  ws.on('message', async function message(data) {
-    data = JSON.parse(data)
-    if (process.env.log === "true") console.log(data)
-    switch (data.op) {
-      case 10:
-        interval = data.d.heartbeat_interval
-        ws.send(JSON.stringify({
-          "op": 1,
-          "d": null
-        }))
-        ident = false
-        break;
-      case 11:
-        if (!ident) {
-          console.log("Identify")
-          ws.send(JSON.stringify({
-            op: 2,
-            d: {
-              token: token,
-              properties: {
-                os: "linux",
-                browser: "whatever this shit is",
-                device: "whatever this shit is"
-              },
-              intents: 33282
-            }
-          }))
-          ident = true
-          request(`/channels/873894045066346538/messages`,"POST",{"embeds": [
-            {
-              "type": "rich",
-              "title": `Gateway connection`,
-              "description": `Bot connected to gateway`,
-              "color": 0x0000ff
-            }
-          ]}, false)
-        }
-        setTimeout(() => {
-          ws.send(JSON.stringify({
-            "op": 1,
-            "d": null
-          }))
-        },interval)
-        ws.send(JSON.stringify({
-          "op": 3,
-          "d": {
-            "since": 91879201,
-            "activities": [{
-              "name": "roblox accounts",
-              "type": 3
+                }],
             }],
         }))
         process.exit()
@@ -224,6 +168,57 @@ export default function bot(loop, db, logs, tasks) {
                             data: {
                                 content: `Alright, task "${params[0].value}" has been set for <@${params[3].value}> with deadline ${new Date(params[2].value).toString()}. Its description is:\n${params[1].value}`,
                             },
+                        })
+                    } else if (interaction.data.name === "ban") {
+                        let params = interaction.data.options
+                        /*
+                             0.  User
+                             1?. Duration
+                             2?. Reason
+                             3?. Days to delete
+                         */
+
+                        params = {
+                            user: params[0].value,
+                            duration: params[1] ? params[1].value : 0,
+                            reason: params[2] ? params[2].value : "No reason supplied",
+                            days: params[3] ? params[3].value : 0
+                        }
+                        bans.insertOne({user:params.user, reason:params.reason, duration:params.duration})
+                        request(`/guilds/${interaction.guild.id}/bans/${params.user}`, "PUT", {
+                            delete_messages_seconds: params.days * 86400
+                        },{ "X-Audit-Log-Reason": params.reason })
+                        request(`/interactions/${interaction.id}/${interaction.token}/callback`, 'POST', {
+                            type: 4,
+                            data: {
+                                embeds: [
+                                    {
+                                        "id": 10674342,
+                                        "title": `<@${params.user}> Banned Successfully`,
+                                        "color": 12919587,
+                                        "fields": [
+                                            {
+                                                "id": 472281785,
+                                                "name": "Ban duration",
+                                                "value": `${params.duration}`,
+                                                "inline": true
+                                            },
+                                            {
+                                                "id": 608893643,
+                                                "name": "Days of messages deleted",
+                                                "value": `${params.days}`,
+                                                "inline": true
+                                            },
+                                            {
+                                                "id": 724530251,
+                                                "name": "Ban reason",
+                                                "value": `${params.reason}`,
+                                                "inline": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
                         })
                     }
                 }

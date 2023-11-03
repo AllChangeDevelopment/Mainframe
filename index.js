@@ -38,5 +38,5 @@ app.post('/', async (req, res) => {
 
 app.listen(3000, () => {
     console.log('Express server initialized')
-    bot(MessageLoop, Db.collection("waiting"), Db.collection("logs"), Db.collection("tasks"))
+    bot(MessageLoop, Db.collection("waiting"), Db.collection("logs"), Db.collection("tasks"), Db.collection("bans"))
 })
