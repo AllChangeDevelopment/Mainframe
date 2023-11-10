@@ -180,14 +180,14 @@ export default function bot(loop, db, logs, tasks, bans) {
 
                         params = {
                             user: params[0].value,
-                            duration: params[1] ? params[1].value : 0,
-                            reason: params[2] ? params[2].value : "No reason supplied",
-                            days: params[3] ? params[3].value : 0
+                            duration: params.find(e => e.name === "duration"),
+                            reason: params.find(e => e.name === "reason"),
+                            days: params.find(e => e.name === "deletion_days")
                         }
-                        bans.insertOne({user:params.user, reason:params.reason, duration:params.duration})
+                        bans.insertOne({user:params.user, reason:(params.reason ? params.reason.value : "No reason given"), duration:(params.duration ? params.duration.value : 0)})
                         request(`/guilds/${interaction.guild.id}/bans/${params.user}`, "PUT", {
-                            delete_messages_seconds: params.days * 86400
-                        },{ "X-Audit-Log-Reason": params.reason })
+                            delete_messages_days: params.days.value || 0
+                        },{ "X-Audit-Log-Reason": params.reason ? params.reason.value : "No reason given" })
                         request(`/interactions/${interaction.id}/${interaction.token}/callback`, 'POST', {
                             type: 4,
                             data: {
@@ -200,19 +200,19 @@ export default function bot(loop, db, logs, tasks, bans) {
                                             {
                                                 "id": 472281785,
                                                 "name": "Ban duration",
-                                                "value": `${params.duration}`,
+                                                "value": `${(params.duration ? params.duration.value : "Indefinite")}`,
                                                 "inline": true
                                             },
                                             {
                                                 "id": 608893643,
                                                 "name": "Days of messages deleted",
-                                                "value": `${params.days}`,
+                                                "value": `${(params.days ? params.days.value : "None")}`,
                                                 "inline": true
                                             },
                                             {
                                                 "id": 724530251,
                                                 "name": "Ban reason",
-                                                "value": `${params.reason}`,
+                                                "value": `${(params.reason ? params.reason.value : "No reason supplied")}`,
                                                 "inline": false
                                             }
                                         ]
@@ -220,7 +220,19 @@ export default function bot(loop, db, logs, tasks, bans) {
                                 ]
                             }
                         })
-                    }
+                    } else if (interaction.data.name === "unban") {
+                        let params = interaction.data.options
+                        let user = params.find(e => e.name === "user").value
+                        let reason = params.find(e => e.name === "reason").value
+                        console.log(reason)
+                        request(`/guilds/${interaction.guild.id}/bans/${user}`, "DELETE", {}, {"X-Audit-Log-Reason": reason || "No reason provided"})
+                        request(`/interactions/${interaction.id}/${interaction.token}/callback`, 'POST', {
+                            type: 4,
+                            data: {
+                                content: `Unbanned <@${user}>`
+                            }
+                        })
+                    } else if (interaction.data.name === "mute") {}
                 }
                 if (data.t === "GUILD_MEMBER_ADD") {
                     let user = data.d.user
