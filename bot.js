@@ -33,6 +33,7 @@ const request = async (endpoint, method, body, headers={}) => {
     try {
         let res = await req.json()
         console.log(endpoint+" good body ig")
+	console.log(res)
         return res
     } catch(err) {
         console.log(endpoint+" shit body ig")
