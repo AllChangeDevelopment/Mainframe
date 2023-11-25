@@ -32,6 +32,7 @@ app.post('/commands', async (req, res) => {
 
 app.post('/', async (req, res) => {
     await db.insertOne(req.body)
+    console.log(req.body)
     MessageLoop.emit("msg", req.body)
     res.send(req.body)
 })
