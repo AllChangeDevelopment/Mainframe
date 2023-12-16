@@ -129,30 +129,31 @@ export default function bot(loop, db, logs, tasks, bans) {
                 if (data.t === 'INTERACTION_CREATE') {
                     let interaction = data.d
                     if (interaction.data.name === "verify") {
-                        let code = Math.floor(100000 + Math.random() * 900000)
-                        db.insertOne({
-                            interaction: interaction, code: code,
-                        })
-
-                        logs.insertOne({
-                            user: interaction.member.user.username,
-                            code: code,
-                            type: "call_verify",
-                            timestamp: Date.now(),
-                        })
+                        // let code = Math.floor(100000 + Math.random() * 900000)
+                        // db.insertOne({
+                        //     interaction: interaction, code: code,
+                        // })
+                        //
+                        // logs.insertOne({
+                        //     user: interaction.member.user.username,
+                        //     code: code,
+                        //     type: "call_verify",
+                        //     timestamp: Date.now(),
+                        // })
 
                         request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {
                             type: 4, data: {
-                                "embeds": [{
-                                    "type": "rich",
-                                    "title": `Verification process`,
-                                    "description": `To verify, visit https://www.roblox.com/games/14664314958/Verification and enter the code ${code}. This one-time code is valid for 15 minutes. Do not share this code with anyone except the game above. Please don't dismiss this message as the next steps will be shown here. If you dismiss it by accident, you can always restart the process by running /verify again.`,
-                                    "color": 0xff0000,
-                                    "fields": [{
-                                        "name": `Status`, "value": `Awaiting code input (${code})`,
-                                    }],
-                                    "url": `https://www.roblox.com/games/14664314958/Verification`,
-                                }], flags: 64,
+                                // "embeds": [{
+                                //     "type": "rich",
+                                //     "title": `Verification process`,
+                                //     "description": `To verify, visit https://www.roblox.com/games/14664314958/Verification and enter the code ${code}. This one-time code is valid for 15 minutes. Do not share this code with anyone except the game above. Please don't dismiss this message as the next steps will be shown here. If you dismiss it by accident, you can always restart the process by running /verify again.`,
+                                //     "color": 0xff0000,
+                                //     "fields": [{
+                                //         "name": `Status`, "value": `Awaiting code input (${code})`,
+                                //     }],
+                                //     "url": `https://www.roblox.com/games/14664314958/Verification`,
+                                // }], flags: 64,
+                                content: "We're sorry, but verification is currently not available due to recent events which should be obvious. All information can be found in the announcement and notice channels."
                             },
                         }, false)
                     } else if (interaction.data.name === "set") {
