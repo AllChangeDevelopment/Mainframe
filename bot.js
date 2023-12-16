@@ -152,8 +152,9 @@ export default function bot(loop, db, logs, tasks, bans) {
                                 //         "name": `Status`, "value": `Awaiting code input (${code})`,
                                 //     }],
                                 //     "url": `https://www.roblox.com/games/14664314958/Verification`,
-                                // }], flags: 64,
-                                content: "We're sorry, but verification is currently not available due to recent events which should be obvious. All information can be found in the announcement and notice channels."
+                                // }],
+                                flags: 64,
+                                content: "We're sorry, but verification is currently unavailable. All information can be found in the announcement and notice channels."
                             },
                         }, false)
                     } else if (interaction.data.name === "set") {
