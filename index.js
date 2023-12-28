@@ -1,8 +1,8 @@
 import express from "express"
-import {Mongo} from "./db.js"
+import Mongo from "./db.js"
 import dotenv from "dotenv"
 
-dotenv.config({ path: '../secrets.env' })
+dotenv.config({ path: './secrets.env' })
 
 import bot, {msg} from './bot.js'
 import cmd from './cmd.js'

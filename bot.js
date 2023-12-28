@@ -1,4 +1,4 @@
-import Mongo from "db.js"
+import Mongo from "./db.js"
 import {EventEmitter} from 'node:events'
 const loop = new EventEmitter
 
