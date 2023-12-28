@@ -2,7 +2,7 @@ import WebSocket from 'ws'
 import fetch from 'node-fetch'
 import dotenv from 'dotenv'
 
-dotenv.config({path: './secrets.env'})
+dotenv.config({path: '../secrets.env'})
 
 const nv = process.env['nv']
 const v = process.env['v']
@@ -146,6 +146,7 @@ export default function bot(loop, db, logs, tasks, bans) {
                                 // "embeds": [{
                                 //     "type": "rich",
                                 //     "title": `Verification process`,
+
                                 //     "description": `To verify, visit https://www.roblox.com/games/14664314958/Verification and enter the code ${code}. This one-time code is valid for 15 minutes. Do not share this code with anyone except the game above. Please don't dismiss this message as the next steps will be shown here. If you dismiss it by accident, you can always restart the process by running /verify again.`,
                                 //     "color": 0xff0000,
                                 //     "fields": [{
