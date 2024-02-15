@@ -9,7 +9,8 @@ export default {
         // unban user
         let params = interaction.data.options
         let user = params.find(e => e.name === "userid").value
-        let reason = params.find(e => e.name === "reason").value
+        let reason = ""
+        try {reason = params.find(e => e.name === "reason").value} catch(e) {}
 
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})

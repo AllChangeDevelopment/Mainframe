@@ -12,8 +12,10 @@ export default {
         // ban user
         let params = interaction.data.options
         let user = params.find(e => e.name === "user").value
-        let reason = params.find(e => e.name === "reason").value
-        let days = params.find(e => e.name === "deletion_days").value * 86400
+        let reason = ""
+        try {reason = params.find(e => e.name === "reason").value} catch(e) {}
+        let days = 0
+        try {days = params.find(e => e.name === "deletion_days").value * 86400} catch(e) {}
 
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})

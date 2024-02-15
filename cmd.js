@@ -4,6 +4,7 @@ import {cmdLogger} from "./logger.js";
 import dotenv from 'dotenv'
 import unban from "./handler/unban.js";
 import ban from "./handler/ban.js";
+import kick from "./handler/kick.js";
 dotenv.config({path: './secrets.env'})
 
 export default async function cmd(body) {
@@ -19,5 +20,12 @@ export default async function cmd(body) {
         name: ban.title,
         description: ban.description,
         options: ban.args
+    })
+
+    cmdLogger.info("Registering /kick")
+    await request(`/applications/${process.env.CID}/commands`, "POST", {}, {
+        name: kick.title,
+        description: kick.description,
+        options: kick.args
     })
 }

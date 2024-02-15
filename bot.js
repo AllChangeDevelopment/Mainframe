@@ -8,6 +8,7 @@ import {gatewayLogger} from "./logger.js";
 
 import ban from './handler/ban.js'
 import unban from "./handler/unban.js";
+import kick from "./handler/kick.js";
 
 export default function bot() {
     const db = new Mongo()
@@ -73,6 +74,9 @@ export default function bot() {
                             break
                         case 'unban':
                             unban.execute(message.d)
+                            break
+                        case 'kick':
+                            kick.execute(message.d)
                             break
 
                     }
