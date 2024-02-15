@@ -66,3 +66,37 @@ export const mongoLogger = winston.createLogger({
         new winston.transports.File({ filename: 'mongo.log' })
     ]
 });
+
+export const reqLogger = winston.createLogger({
+    format: combine(
+        label({ label: 'Requests' }),
+        timestamp(),
+        myFormat
+    ),
+
+    level: "silly",
+    levels: levels.levels,
+    transports: [
+        new (winston.transports.Console)({
+            colorize: 'all'
+        }),
+        new winston.transports.File({ filename: 'req.log' })
+    ]
+});
+
+export const cmdLogger = winston.createLogger({
+    format: combine(
+        label({ label: 'Command Creation' }),
+        timestamp(),
+        myFormat
+    ),
+
+    level: "silly",
+    levels: levels.levels,
+    transports: [
+        new (winston.transports.Console)({
+            colorize: 'all'
+        }),
+        new winston.transports.File({ filename: 'cmd.log' })
+    ]
+});

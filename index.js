@@ -39,4 +39,5 @@ app.post('/', async (req, res) => {
 app.listen(9562, () => {
     console.log('Express server initialized')
     bot()
+    cmd()
 })

@@ -4,8 +4,10 @@ import {WebSocket} from 'ws'
 const loop = new EventEmitter
 import dotenv from 'dotenv'
 dotenv.config({path: "./secrets.env"})
-
 import {gatewayLogger} from "./logger.js";
+
+import ban from './handler/ban.js'
+import unban from "./handler/unban.js";
 
 export default function bot() {
     const db = new Mongo()
@@ -18,7 +20,10 @@ export default function bot() {
 
     let hbint = 0
     let ident = false
-    con.on('close', (code, reason) => gatewayLogger.error(code+" "+reason))
+    con.on('close', (code, reason) => {
+        gatewayLogger.error(code+" "+reason)
+        bot()
+    })
     con.on('message', message => {
         message = JSON.parse(message)
 
@@ -61,6 +66,17 @@ export default function bot() {
                 break
             case 0:
                 gatewayLogger.debug("Event: "+message.t)
+                if (message.t === "INTERACTION_CREATE") {
+                    switch (message.d.data.name) {
+                        case 'ban':
+                            ban.execute(message.d)
+                            break
+                        case 'unban':
+                            unban.execute(message.d)
+                            break
+
+                    }
+                }
         }
 
     })
