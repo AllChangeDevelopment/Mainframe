@@ -1,5 +1,6 @@
 import { MongoClient, ServerApiVersion } from 'mongodb'
 import dotenv from 'dotenv'
+import {mongoLogger} from "./logger.js";
 
 dotenv.config({ path: "./secrets.env" })
 
@@ -22,9 +23,9 @@ export default class Mongo {
                 await client.connect()
                 this.c = await client.db("test")
                 await this.c.command({ping: 1})
-                console.log("MongoDB connection active")
+                mongoLogger.info("MongoDB connection active")
             } catch (err) {
-                console.log("MongoDB connection FAILURE:")
+                mongoLogger.error("MongoDB connection FAILURE")
                 console.log(err)
                 process.exit(1)
             }
@@ -41,6 +42,7 @@ export default class Mongo {
     get(col,filter) {
         return new Promise(async (res, rej) => {
             try {
+                mongoLogger.verbose(`Get request to ${col}`)
                 const collection = await this.c.collection(col)
                 res(await collection.find(filter).toArray())
             } catch (err) {
@@ -59,6 +61,7 @@ export default class Mongo {
     async post(col,data) {
         return new Promise(async (res, rej) => {
             try {
+                mongoLogger.verbose(`Post request to ${col}`)
                 const collection = await this.c.collection(col)
                 let result = await collection.insertMany(data)
                 res()
@@ -78,6 +81,7 @@ export default class Mongo {
     async patch(col, filter, query) {
         return new Promise(async (res, rej) => {
             try {
+                mongoLogger.verbose(`Patch request to ${col}`)
                 const collection = await this.c.collection(col)
                 res(await collection.updateOne(filter, query))
             } catch (err) {
@@ -93,6 +97,7 @@ export default class Mongo {
      * @returns {Promise<void>}
      */
     async delete(col, filter) {
+        mongoLogger.verbose(`Delete request to ${col}`)
         const collection = await this.c.collection(col)
         await collection.deleteMany(filter)
     }
