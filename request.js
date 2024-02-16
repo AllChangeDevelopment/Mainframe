@@ -19,7 +19,7 @@ export default async function request(endpoint, method="GET", headers={}, body=n
 
     if (!req.ok) {
         reqLogger.error("Request to "+endpoint+" failed with code "+req.status)
-        console.log(await req.json())
+        console.log((await req.json()).errors.communication_disabled_until._errors)
         return
     }
 

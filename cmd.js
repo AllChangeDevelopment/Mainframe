@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import unban from "./handler/unban.js";
 import ban from "./handler/ban.js";
 import kick from "./handler/kick.js";
+import mute from "./handler/mute.js";
+import unmute from "./handler/unmute.js";
 dotenv.config({path: './secrets.env'})
 
 export default async function cmd(body) {
@@ -27,5 +29,19 @@ export default async function cmd(body) {
         name: kick.title,
         description: kick.description,
         options: kick.args
+    })
+
+    cmdLogger.info("Registering /mute")
+    await request(`/applications/${process.env.CID}/commands`, "POST", {}, {
+        name: mute.title,
+        description: mute.description,
+        options: mute.args
+    })
+
+    cmdLogger.info("Registering /unmute")
+    await request(`/applications/${process.env.CID}/commands`, "POST", {}, {
+        name: unmute.title,
+        description: unmute.description,
+        options: unmute.args
     })
 }

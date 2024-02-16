@@ -9,6 +9,8 @@ import {gatewayLogger} from "./logger.js";
 import ban from './handler/ban.js'
 import unban from "./handler/unban.js";
 import kick from "./handler/kick.js";
+import mute from "./handler/mute.js";
+import unmute from "./handler/unmute.js";
 
 export default function bot() {
     const db = new Mongo()
@@ -78,7 +80,12 @@ export default function bot() {
                         case 'kick':
                             kick.execute(message.d)
                             break
-
+                        case 'mute':
+                            mute.execute(message.d)
+                            break
+                        case 'unmute':
+                            unmute.execute(message.d)
+                            break
                     }
                 }
         }
