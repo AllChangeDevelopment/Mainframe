@@ -84,7 +84,10 @@ export default function bot() {
                             mute.execute(message.d)
                             break
                         case 'unmute':
-                            unmute.execute(message.d)
+                            unmute.execute(message.d, db)
+                            break
+                        case 'warnings':
+                            unmute.execute(message.d, db)
                             break
                     }
                 }

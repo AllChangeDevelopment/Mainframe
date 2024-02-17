@@ -1,4 +1,5 @@
 import request from "../request.js";
+import warnings from "./warnings.js";
 
 
 //uid
@@ -9,9 +10,11 @@ export default {
     description: "Unmutes a user",
     args: [{name: "user", type: 6, description: "Target user", required: true},
         {name: "reason", type: 3, description: "Reason for unmute", required: false}],
-    async execute(interaction) {
+    async execute(interaction, db) {
         // unban user
         let params = interaction.data.options
+        if (interaction.data.name !== "unmute") return await warnings.execute(interaction, db)
+
         let user = params.find(e => e.name === "user").value
         let reason = ""
         try {reason = params.find(e => e.name === "reason").value} catch(e) {}
