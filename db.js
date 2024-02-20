@@ -18,7 +18,7 @@ const client = new MongoClient(process.env.MONGO, {
  */
 export default class Mongo {
     constructor() {
-        const f = async () => {
+        const func = async () => {
             try {
                 await client.connect()
                 this.c = await client.db("test")
@@ -30,7 +30,7 @@ export default class Mongo {
                 throw new Error("Yes")
             }
         }
-        f().then(() => {/*ignore*/})
+        func().then(() => {/*ignore*/})
     }
 
     /**
@@ -41,7 +41,7 @@ export default class Mongo {
      */
     get(col,filter) {
         return new Promise( (res, rej) => {
-            const f = async () => {
+            const func = async () => {
                 try {
                     mongoLogger.verbose(`Get request to ${col}`)
                     const collection = await this.c.collection(col)
@@ -50,7 +50,7 @@ export default class Mongo {
                     rej(err)
                 }
             }
-            f().then(() => {/*ignore*/})
+            func().then(() => {/*ignore*/})
         })
 
     }
@@ -63,7 +63,7 @@ export default class Mongo {
      */
     post(col,data) {
         return new Promise( (res, rej) => {
-            const f = async () => {
+            const func = async () => {
                 try {
                     mongoLogger.verbose(`Post request to ${col}`)
                     const collection = await this.c.collection(col)
@@ -73,7 +73,7 @@ export default class Mongo {
                     rej(err)
                 }
             }
-            f().then(() => {/*ignore*/})
+            func().then(() => {/*ignore*/})
         })
     }
 
@@ -86,7 +86,7 @@ export default class Mongo {
      */
     patch(col, filter, query) {
         return new Promise((res, rej) => {
-            const f = async () => {
+            const func = async () => {
                 try {
                     mongoLogger.verbose(`Patch request to ${col}`)
                     const collection = await this.c.collection(col)
@@ -95,7 +95,7 @@ export default class Mongo {
                     rej(err)
                 }
             }
-            f().then(() => {/*ignore*/})
+            func().then(() => {/*ignore*/})
 
         })
     }
