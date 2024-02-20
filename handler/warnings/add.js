@@ -14,7 +14,7 @@ export default {
         await db.post("warnings", [{user: user, reason: reason}])
 
         await request(`/webhooks/${process.env.CID}/${interaction.token}/messages/@original`, "PATCH", {}, {
-            type: 4, content: "User warned successfully: "+reason
+            type: 4, content: `User warned successfully: ${reason}`
         })
     }
 }

@@ -12,7 +12,7 @@ export default {
         await db.delete("warnings", {_id: new ObjectId(id)})
 
         await request(`/webhooks/${process.env.CID}/${interaction.token}/messages/@original`, "PATCH", {}, {
-            type: 4, content: "Warning "+id+" deleted successfully"
+            type: 4, content: `Warning ${id} deleted successfully`
         })
     }
 }

@@ -24,7 +24,7 @@ export default function bot() {
     let hbint = 0
     let ident = false
     con.on('close', (code, reason) => {
-        gatewayLogger.error(code+" "+reason)
+        gatewayLogger.error(`${code} ${reason}`)
         bot()
     })
     con.on('message', message => {
@@ -43,8 +43,8 @@ export default function bot() {
                     con.send(JSON.stringify({op: 1,s:null,t:null,d:{}}))
                     gatewayLogger.info("Heartbeat sent")
                 }, hbint)
-                gatewayLogger.verbose("Time until next heartbeat: "+hbint)
-                gatewayLogger.verbose("Identifying: "+!ident)
+                gatewayLogger.verbose(`Time until next heartbeat: ${hbint}`)
+                gatewayLogger.verbose(`Identifying: ${!ident}`)
 
                 if (!ident) {
                     con.send(JSON.stringify({op: 2, d: {
@@ -68,7 +68,7 @@ export default function bot() {
                 gatewayLogger.info("Heartbeat sent")
                 break
             case 0:
-                gatewayLogger.debug("Event: "+message.t)
+                gatewayLogger.debug(`Event: ${message.t}`)
                 if (message.t === "INTERACTION_CREATE") {
                     switch (message.d.data.name) {
                         case 'ban':

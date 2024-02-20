@@ -12,7 +12,7 @@ export default {
         let msg = ""
 
         list.forEach(e => {
-            msg += e._id + ": "
+            msg += `${e._id}: `
             msg += e.reason
             msg += "\n"
         })
