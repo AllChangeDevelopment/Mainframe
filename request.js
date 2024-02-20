@@ -27,5 +27,6 @@ export default async function request(endpoint, method="GET", headers={}, body=n
         return await req.json()
     } catch(e) {
         reqLogger.warn("No JSON returned")
+        return {}
     }
 }
