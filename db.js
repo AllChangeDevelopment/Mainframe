@@ -61,7 +61,7 @@ export default class Mongo {
      * @param {Array} data - Array of documents as objects
      * @returns {Promise} Document inserted
      */
-    async post(col,data) {
+    post(col,data) {
         return new Promise( (res, rej) => {
             const f = async () => {
                 try {
@@ -84,7 +84,7 @@ export default class Mongo {
      * @param query - PATCH query as per the docs
      * @returns {Promise} Document after edits
      */
-    async patch(col, filter, query) {
+    patch(col, filter, query) {
         return new Promise((res, rej) => {
             const f = async () => {
                 try {

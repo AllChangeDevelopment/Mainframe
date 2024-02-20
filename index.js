@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/commands', async (req, res) => {
-    cmd(req.body)
+    await cmd(req.body)
     res.send(req.body)
 })
 
