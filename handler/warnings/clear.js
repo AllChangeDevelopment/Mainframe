@@ -1,5 +1,4 @@
 import request from "../../request.js";
-import {ObjectId} from "mongodb";
 
 export default {
     async execute(interaction, db) {

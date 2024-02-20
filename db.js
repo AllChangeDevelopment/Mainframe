@@ -30,7 +30,7 @@ export default class Mongo {
                 process.exit(1)
             }
         }
-        f().then(r => {})
+        f().then(() => {/*ignore*/})
     }
 
     /**
@@ -63,7 +63,7 @@ export default class Mongo {
             try {
                 mongoLogger.verbose(`Post request to ${col}`)
                 const collection = await this.c.collection(col)
-                let result = await collection.insertMany(data)
+                await collection.insertMany(data)
                 res()
             } catch (err) {
                 rej(err)

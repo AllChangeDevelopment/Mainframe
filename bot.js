@@ -95,8 +95,9 @@ export default function bot() {
 
     })
 
-    loop.on("code", body => {
+    loop.on("code", () => {
         // code handler
+        // TODO re-add body parameter when implementing
     })
 }
 
