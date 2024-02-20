@@ -27,7 +27,7 @@ export default class Mongo {
             } catch (err) {
                 mongoLogger.error("MongoDB connection FAILURE")
                 console.log(err)
-                process.exit(1)
+                throw new Error("Yes")
             }
         }
         f().then(() => {/*ignore*/})
