@@ -1,7 +1,7 @@
 # All Change Verifier
 
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/te9i.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
-
+[![DeepSource](https://app.deepsource.com/gh/AllChangeDevelopment/Mainframe.svg/?label=active+issues&show_trend=true&token=-PAXJW2QyrqkId-aO71-JEy7)](https://app.deepsource.com/gh/AllChangeDevelopment/Mainframe/)
 
 Repository for the **official** verification bot for the All Change Community, which verifies the user's age.
 
