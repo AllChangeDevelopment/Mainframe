@@ -20,7 +20,7 @@ export default {
         let duration = new Date(ending).toISOString()
         console.log(duration)
         let reason = ""
-        try {reason = params.find(e => e.name === "reason").value} catch(e) {}
+        try {reason = params.find(e => e.name === "reason").value} catch(e) { /* continue regardless */ }
 
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})

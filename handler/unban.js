@@ -10,7 +10,7 @@ export default {
         let params = interaction.data.options
         let user = params.find(e => e.name === "userid").value
         let reason = ""
-        try {reason = params.find(e => e.name === "reason").value} catch(e) {}
+        try {reason = params.find(e => e.name === "reason").value} catch(e) { /* continue regardless */ }
 
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})
