@@ -16,7 +16,7 @@ export default function bot() {
     const db = new Mongo()
 
     const conLink  = "wss://gateway.discord.gg/?v=10&encoding=json"
-    let con = new WebSocket(conLink)
+    const con = new WebSocket(conLink)
     con.on('open', () => {
         gatewayLogger.info("Gateway connection open")
     })

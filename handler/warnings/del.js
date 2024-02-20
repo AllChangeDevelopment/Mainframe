@@ -3,8 +3,8 @@ import {ObjectId} from "mongodb";
 
 export default {
     async execute(interaction, db) {
-        let params = interaction.data.options[0].options
-        let id = params.find(e => e.name === "warnid").value
+        const params = interaction.data.options[0].options
+        const id = params.find(e => e.name === "warnid").value
 
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})

@@ -6,8 +6,8 @@ export default {
     args: [{name: "user", type: 6, description: "Target user", required: true},
         {name: "reason", type: 3, description: "Reason for kick", required: false}],
     async execute(interaction) {
-        let params = interaction.data.options
-        let user = params.find(e => e.name === "user").value
+        const params = interaction.data.options
+        const user = params.find(e => e.name === "user").value
         let reason = ""
         try {reason = params.find(e => e.name === "reason").value} catch(e) { reason = ""}
 

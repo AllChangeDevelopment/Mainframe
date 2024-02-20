@@ -10,8 +10,8 @@ export default {
         {name: "reason", type: 3, description: "Reason for unban", required: false}],
     async execute(interaction) {
         // ban user
-        let params = interaction.data.options
-        let user = params.find(e => e.name === "user").value
+        const params = interaction.data.options
+        const user = params.find(e => e.name === "user").value
         let reason = ""
         try {reason = params.find(e => e.name === "reason").value} catch(e) { /* continue regardless */ }
         let days = 0

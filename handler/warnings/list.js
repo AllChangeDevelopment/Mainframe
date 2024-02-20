@@ -2,8 +2,8 @@ import request from "../../request.js";
 
 export default {
     async execute(interaction, db) {
-        let params = interaction.data.options[0].options
-        let user = params.find(e => e.name === "user").value
+        const params = interaction.data.options[0].options
+        const user = params.find(e => e.name === "user").value
 
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})

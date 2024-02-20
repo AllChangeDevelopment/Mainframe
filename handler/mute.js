@@ -12,12 +12,12 @@ export default {
         {name: "reason", type: 3, description: "Reason for unban", required: false}],
     async execute(interaction) {
         // unban user
-        let params = interaction.data.options
-        let user = params.find(e => e.name === "user").value
-        let ending = params.find(e => e.name === "duration").value*(3.6*10**6)+Date.now()
+        const params = interaction.data.options
+        const user = params.find(e => e.name === "user").value
+        const ending = params.find(e => e.name === "duration").value*(3.6*10**6)+Date.now()
         console.log(ending)
         console.log(ending+Date.now())
-        let duration = new Date(ending).toISOString()
+        const duration = new Date(ending).toISOString()
         console.log(duration)
         let reason = ""
         try {reason = params.find(e => e.name === "reason").value} catch(e) { /* continue regardless */ }

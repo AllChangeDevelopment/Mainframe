@@ -4,7 +4,7 @@ import chalk from 'chalk'
 const { combine, timestamp, label, printf } = format;
 
 const myFormat = printf(({ level, message, label, timestamp }) => { // skipcq: JS-0123 - Intentional
-    let msg = `${timestamp} [${label}] ${level}: ${message}`;
+    const msg = `${timestamp} [${label}] ${level}: ${message}`;
 
     switch (level) {
         case 'error':

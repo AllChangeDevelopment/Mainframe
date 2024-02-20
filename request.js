@@ -5,7 +5,7 @@ import {reqLogger} from './logger.js'
 
 export default async function request(endpoint, method="GET", headers={}, body=null) {
     reqLogger.http("Sending "+method+" request to "+endpoint)
-    let req = await fetch("https://discord.com/api/v10"+endpoint, {
+    const req = await fetch("https://discord.com/api/v10"+endpoint, {
         method: method,
         headers: {
             ...headers,
