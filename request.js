@@ -29,4 +29,5 @@ export default async function request(endpoint, method="GET", headers={}, body=n
         reqLogger.warn("No JSON returned")
         return {}
     }
+    
 }
