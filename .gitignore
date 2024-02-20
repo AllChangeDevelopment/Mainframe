@@ -6,3 +6,4 @@ node_modules
 .upm
 secrets.env
 .idea
+*.log
