@@ -3,7 +3,7 @@ import chalk from 'chalk'
 
 const { combine, timestamp, label, printf } = format;
 
-const myFormat = printf(({ level, message, label, timestamp }) => { // skipcq: JS-0123 - Intentional
+const myFormat = printf(({ level, message, label, timestamp }) => { // skipcq: JS-0123, JS-0045 - Intentional
     const msg = `${timestamp} [${label}] ${level}: ${message}`;
 
     switch (level) {

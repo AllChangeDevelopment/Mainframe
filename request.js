@@ -20,7 +20,7 @@ export default async function request(endpoint, method="GET", headers={}, body=n
     if (!req.ok) {
         reqLogger.error(`Request to ${endpoint} failed with code ${req.status}`)
         // const error = (await req.json())
-        return
+        return {}
     }
 
     try {
