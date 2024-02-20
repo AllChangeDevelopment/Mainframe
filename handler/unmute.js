@@ -13,7 +13,10 @@ export default {
     async execute(interaction, db) {
         // unban user
         let params = interaction.data.options
-        if (interaction.data.name !== "unmute") return await warnings.execute(interaction, db)
+        if (interaction.data.name !== "unmute") {
+            await warnings.execute(interaction, db)
+            return
+        }
 
         let user = params.find(e => e.name === "user").value
         let reason = ""
