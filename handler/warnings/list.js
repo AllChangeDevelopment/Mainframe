@@ -8,7 +8,7 @@ export default {
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})
 
-        const list = await db.get("warnings", {user: user})
+        const list = await db.get("warnings", {user})
         let msg = ""
 
         list.forEach(e => {

@@ -12,7 +12,7 @@ export default {
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})
 
-        await db.patch("warnings", {_id: new ObjectId(id)}, {$set: {reason: reason}})
+        await db.patch("warnings", {_id: new ObjectId(id)}, {$set: {reason}})
 
         await request(`/webhooks/${process.env.CID}/${interaction.token}/messages/@original`, "PATCH", {}, {
             type: 4, content: `User warned successfully: ${reason}`
