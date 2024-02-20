@@ -40,14 +40,17 @@ export default class Mongo {
      * @returns {Promise} - Results of the GET Request
      */
     get(col,filter) {
-        return new Promise(async (res, rej) => {
-            try {
-                mongoLogger.verbose(`Get request to ${col}`)
-                const collection = await this.c.collection(col)
-                res(await collection.find(filter).toArray())
-            } catch (err) {
-                rej(err)
+        return new Promise( (res, rej) => {
+            const f = async () => {
+                try {
+                    mongoLogger.verbose(`Get request to ${col}`)
+                    const collection = await this.c.collection(col)
+                    res(await collection.find(filter).toArray())
+                } catch (err) {
+                    rej(err)
+                }
             }
+            f().then(() => {/*ignore*/})
         })
 
     }
@@ -59,15 +62,18 @@ export default class Mongo {
      * @returns {Promise} Document inserted
      */
     async post(col,data) {
-        return new Promise(async (res, rej) => {
-            try {
-                mongoLogger.verbose(`Post request to ${col}`)
-                const collection = await this.c.collection(col)
-                await collection.insertMany(data)
-                res()
-            } catch (err) {
-                rej(err)
+        return new Promise( (res, rej) => {
+            const f = async () => {
+                try {
+                    mongoLogger.verbose(`Post request to ${col}`)
+                    const collection = await this.c.collection(col)
+                    await collection.insertMany(data)
+                    res()
+                } catch (err) {
+                    rej(err)
+                }
             }
+            f().then(() => {/*ignore*/})
         })
     }
 
@@ -79,14 +85,18 @@ export default class Mongo {
      * @returns {Promise} Document after edits
      */
     async patch(col, filter, query) {
-        return new Promise(async (res, rej) => {
-            try {
-                mongoLogger.verbose(`Patch request to ${col}`)
-                const collection = await this.c.collection(col)
-                res(await collection.updateOne(filter, query))
-            } catch (err) {
-                rej(err)
+        return new Promise((res, rej) => {
+            const f = async () => {
+                try {
+                    mongoLogger.verbose(`Patch request to ${col}`)
+                    const collection = await this.c.collection(col)
+                    res(await collection.updateOne(filter, query))
+                } catch (err) {
+                    rej(err)
+                }
             }
+            f().then(() => {/*ignore*/})
+
         })
     }
 
