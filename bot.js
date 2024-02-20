@@ -89,8 +89,15 @@ export default function bot() {
                         case 'warnings':
                             unmute.execute(message.d, db)
                             break
+                        default:
+                            throw new Error("Command not added to switch statement!")
                     }
                 }
+                break
+
+            default:
+                gatewayLogger.error(`Unknown gateway opcode sent: ${message.op}`)
+                throw new Error("Unknown gateway opcode sent")
         }
 
     })
