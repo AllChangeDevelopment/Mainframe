@@ -10,6 +10,10 @@ import unmute from "./handler/unmute.js";
 import warnings from "./handler/warnings.js";
 dotenv.config({path: './secrets.env'})
 
+/**
+ * Registers commands
+ * @returns {Promise<void>}
+ */
 export default async function cmd() {
     cmdLogger.info("Registering /unban")
     await request(`/applications/${process.env.CID}/commands`, "POST", {}, {

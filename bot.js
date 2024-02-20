@@ -12,6 +12,9 @@ import kick from "./handler/kick.js";
 import mute from "./handler/mute.js";
 import unmute from "./handler/unmute.js";
 
+/**
+ * Connects to Discord Gateway and launches the bot.
+ */
 export default function bot() {
     const db = new Mongo()
 
