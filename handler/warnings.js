@@ -3,6 +3,7 @@ import list from "./warnings/list.js";
 import edit from "./warnings/edit.js";
 import del from "./warnings/del.js";
 import clear from "./warnings/clear.js";
+import {gatewayLogger} from "../logger.js";
 
 export default {
     title: "warnings",
@@ -41,6 +42,9 @@ export default {
             case 'clear':
                 await clear.execute(interaction, db)
                 break
+            default:
+                gatewayLogger.error("Warning subcommand not registered!")
+                throw new Error("Warning subcommand not registered!")
         }
     }
 }

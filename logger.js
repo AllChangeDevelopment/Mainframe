@@ -21,6 +21,8 @@ const myFormat = printf(({ level, message, label, timestamp }) => { // skipcq: J
             return chalk.green.bold(msg)
         case 'silly':
             return chalk.bgRed.bold.white(msg)
+        default:
+            return msg
     }
 });
 const levels = {levels: {
