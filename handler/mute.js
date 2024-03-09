@@ -25,6 +25,9 @@ export default {
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})
 
+        let channel = await request(`/users/@me/channels`, "POST", {}, {recipient_id: user})
+        await request(`/channels/${channel.id}/messages`, "POST", {}, {content: `Your have been muted in All Change Community for the following reason: ${reason}`})
+
         await request(`/guilds/${interaction.guild.id}/members/${user}`, "PATCH",
             {'X-Audit-Log-Reason': reason}, {communication_disabled_until: duration})
 

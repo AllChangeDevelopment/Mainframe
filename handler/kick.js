@@ -14,6 +14,9 @@ export default {
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})
 
+        let channel = await request(`/users/@me/channels`, "POST", {}, {recipient_id: user})
+        await request(`/channels/${channel.id}/messages`, "POST", {}, {content: `Your have been kicked from All Change Community for the following reason: ${reason}`})// TODO add server link
+
         await request(`/guilds/${interaction.guild.id}/members/${user}`, "DELETE",
             {'X-Audit-Log-Reason': reason})
 

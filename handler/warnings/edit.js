@@ -13,6 +13,10 @@ export default {
             {type: 5})
 
         await db.patch("warnings", {_id: new ObjectId(id)}, {$set: {reason}})
+        const warning = (await db.get("warnings", {_id: new ObjectId(id)}))[0]
+
+        let channel = await request(`/users/@me/channels`, "POST", {}, {recipient_id: warning.user})
+        await request(`/channels/${channel.id}/messages`, "POST", {}, {content: `Your warning ${id} has been updated: ${reason}`})
 
         await request(`/webhooks/${process.env.CID}/${interaction.token}/messages/@original`, "PATCH", {}, {
             type: 4, content: `User warned successfully: ${reason}`

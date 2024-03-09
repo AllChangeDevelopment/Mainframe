@@ -3,7 +3,7 @@ import request from "../request.js";
 export default {
     title: "unban",
     description: "Unbans a user",
-    args: [{name: "userid", type: 4, description: "ID of target user", required: true},
+    args: [{name: "userid", type: 3, description: "ID of target user", required: true},
         {name: "reason", type: 3, description: "Reason for unban", required: false}],
     async execute(interaction) {
         // unban user

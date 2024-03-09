@@ -20,6 +20,9 @@ export default {
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})
 
+        let channel = await request(`/users/@me/channels`, "POST", {}, {recipient_id: user})
+        await request(`/channels/${channel.id}/messages`, "POST", {}, {content: `You have been banned from All Change Community for the following reason: ${reason}`})// TODO add form link
+
         await request(`/guilds/${interaction.guild_id}/bans/${user}`, "PUT",
             {'X-Audit-Log-Reason': reason}, {delete_message_seconds: days})
 
