@@ -20,7 +20,8 @@ export default async function cmd() {
         name: unban.title,
         description: unban.description,
         options: unban.args,
-        default_member_permissions: "4"
+        default_member_permissions: "4",
+        dm_permission: false
     })
 
     cmdLogger.info("Registering /ban")
@@ -28,7 +29,8 @@ export default async function cmd() {
         name: ban.title,
         description: ban.description,
         options: ban.args,
-        default_member_permissions: "4"
+        default_member_permissions: "4",
+        dm_permission: false
     })
 
     setTimeout(async () => {
@@ -38,7 +40,8 @@ export default async function cmd() {
             name: kick.title,
             description: kick.description,
             options: kick.args,
-            default_member_permissions: "2"
+            default_member_permissions: "2",
+            dm_permission: false
         })
 
         cmdLogger.info("Registering /mute")
@@ -46,7 +49,8 @@ export default async function cmd() {
             name: mute.title,
             description: mute.description,
             options: mute.args,
-            default_member_permissions: "1099511627776"
+            default_member_permissions: "1099511627776",
+            dm_permission: false
         })
 
         setTimeout(async () => {
@@ -56,7 +60,8 @@ export default async function cmd() {
                 name: unmute.title,
                 description: unmute.description,
                 options: unmute.args,
-                default_member_permissions: "1099511627776"
+                default_member_permissions: "1099511627776",
+                dm_permission: false
             })
 
             cmdLogger.info("Registering /warnings")
@@ -64,7 +69,8 @@ export default async function cmd() {
                 name: warnings.title,
                 description: warnings.description,
                 options: warnings.args,
-                default_member_permissions: "1099511627776"
+                default_member_permissions: "1099511627776",
+                dm_permission: false
             })
         }, 5000)
     }, 5000)
