@@ -18,10 +18,12 @@ export default {
 
             let str = ""
 
-            if (await db.get("feedback", {user})) {
+            if ((await db.get("feedback", {user}))[0]) {
+                console.log("patched")
                 await db.patch("feedback", {user}, {"$set": {user, pass, score}})
                 str = "updated"
             } else {
+                console.log("addded")
                 await db.post("feedback", [{user, pass, score}])
                 str = "added"
             }
