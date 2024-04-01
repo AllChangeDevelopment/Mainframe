@@ -9,7 +9,7 @@ export default {
     description: "Mutes a user for a given period of time",
     args: [{name: "user", type: 6, description: "Target user", required: true},
         {name: "duration", type:10, description: "Duration for mute in hours. Decimals accepted.", required: true},
-        {name: "reason", type: 3, description: "Reason for unban", required: false}],
+        {name: "reason", type: 3, description: "Reason for unban", required: true}],
     async execute(interaction) {
         // unban user
         const params = interaction.data.options
@@ -22,17 +22,42 @@ export default {
         let reason = ""
         try {reason = params.find(e => e.name === "reason").value} catch(e) { /* continue regardless */ }
 
+        const embed = [
+            {
+                "type": "rich",
+                "title": "User muted",
+                "color": 0xff0000,
+                "fields": [
+                    {
+                        "name": "User",
+                        "value": `<@${user}>`,
+                        "inline": true
+                    },
+                    {
+                        "name": "Reason",
+                        "value": reason,
+                        "inline": true
+                    },
+                    {
+                        "name": "Ends at",
+                        "value": duration,
+                        "inline": true
+                    }
+                ]
+            }
+        ]
+
         await request(`/interactions/${interaction.id}/${interaction.token}/callback`, "POST", {},
             {type: 5})
 
         let channel = await request(`/users/@me/channels`, "POST", {}, {recipient_id: user})
-        await request(`/channels/${channel.id}/messages`, "POST", {}, {content: `Your have been muted in All Change Community for the following reason: ${reason}`})
+        await request(`/channels/${channel.id}/messages`, "POST", {}, {content: `You have been muted in All Change Community until ${duration} for the following reason: ${reason}`})
 
         await request(`/guilds/${interaction.guild.id}/members/${user}`, "PATCH",
             {'X-Audit-Log-Reason': reason}, {communication_disabled_until: duration})
 
         await request(`/webhooks/${process.env.CID}/${interaction.token}/messages/@original`, "PATCH", {}, {
-            type: 4, content: "User muted successfully."
+            type: 4, embeds: embed
         })
     }
 }

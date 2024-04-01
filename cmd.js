@@ -8,6 +8,8 @@ import kick from "./handler/kick.js";
 import mute from "./handler/mute.js";
 import unmute from "./handler/unmute.js";
 import warnings from "./handler/warnings.js";
+import feedback from "./handler/feedback.js";
+
 dotenv.config({path: './secrets.env'})
 
 /**
@@ -70,6 +72,14 @@ export default async function cmd() {
                 description: warnings.description,
                 options: warnings.args,
                 default_member_permissions: "1099511627776",
+                dm_permission: false
+            })
+
+            cmdLogger.info("Registering /feedback")
+            await request(`/applications/${process.env.CID}/commands`, "POST", {}, {
+                name: feedback.title,
+                description: feedback.description,
+                options: feedback.args,
                 dm_permission: false
             })
         }, 5000)

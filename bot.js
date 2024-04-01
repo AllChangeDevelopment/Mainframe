@@ -11,6 +11,8 @@ import unban from "./handler/unban.js";
 import kick from "./handler/kick.js";
 import mute from "./handler/mute.js";
 import unmute from "./handler/unmute.js";
+import warnings from "./handler/warnings.js";
+import feedback from "./handler/feedback.js";
 
 /**
  * Connects to Discord Gateway and launches the bot.
@@ -90,7 +92,10 @@ export default function bot() {
                             unmute.execute(message.d, db)
                             break
                         case 'warnings':
-                            unmute.execute(message.d, db)
+                            warnings.execute(message.d, db)
+                            break
+                        case 'feedback':
+                            feedback.execute(message.d, db)
                             break
                         default:
                             throw new Error("Command not added to switch statement!")
@@ -107,7 +112,7 @@ export default function bot() {
 
     loop.on("code", () => {
         // code handler
-        // TODO re-add body parameter when implementing
+        // TODO re-add.js body parameter when implementing
     })
 }
 

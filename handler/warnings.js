@@ -9,7 +9,7 @@ export default {
     title: "warnings",
     description: "Manage warnings",
     args: [{type: 1,name: "add",description: "Warns a user", options: [
-            {type: 6, name: "user", description: "User to warn", required: true}, {type: 3, name: "reason", description: "Reason for warn", required: true}
+            {type: 6, name: "user", description: "User to warn", required: true, autocomplete: true}, {type: 3, name: "reason", description: "Reason for warn", required: true}
         ]},
         {type: 1,name: "list",description: "Lists a user's warnings",options: [
             {type: 6, name: "user", description: "Which user to list warnings", required: true}
