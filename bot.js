@@ -54,7 +54,7 @@ export default function bot() {
                 if (!ident) {
                     con.send(JSON.stringify({op: 2, d: {
                         token: process.env.TOKEN,
-                        intents: 3276799,
+                        intents: 32769,
                         properties: {
                             os: "darwin",
                             browser: "who knows",
