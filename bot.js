@@ -13,6 +13,7 @@ import mute from "./handler/mute.js";
 import unmute from "./handler/unmute.js";
 import warnings from "./handler/warnings.js";
 import feedback from "./handler/feedback.js";
+import finesse from "./handler/finesse.js";
 
 /**
  * Connects to Discord Gateway and launches the bot.
@@ -96,6 +97,9 @@ export default function bot() {
                             break
                         case 'feedback':
                             feedback.execute(message.d, db)
+                            break
+                        case 'finesse':
+                            finesse.execute(message.d, db)
                             break
                         default:
                             throw new Error("Command not added to switch statement!")

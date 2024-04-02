@@ -9,6 +9,7 @@ import mute from "./handler/mute.js";
 import unmute from "./handler/unmute.js";
 import warnings from "./handler/warnings.js";
 import feedback from "./handler/feedback.js";
+import finesse from "./handler/finesse.js";
 
 dotenv.config({path: './secrets.env'})
 
@@ -82,6 +83,17 @@ export default async function cmd() {
                 options: feedback.args,
                 dm_permission: false
             })
+
+            setTimeout(async () => {
+                cmdLogger.info("Registering /finesse")
+                await request(`/applications/${process.env.CID}/commands`, "POST", {}, {
+                    name: finesse.title,
+                    description: finesse.description,
+                    options: finesse.args,
+                    default_member_permissions: "8",
+                    dm_permission: false
+                })
+            }, 5000)
         }, 5000)
     }, 5000)
 }
