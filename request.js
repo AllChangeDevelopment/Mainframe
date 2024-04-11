@@ -13,15 +13,18 @@ import {reqLogger} from './logger.js'
  */
 export default async function request(endpoint, method="GET", headers={}, body=null) {
     reqLogger.http(`Sending ${method} request to ${endpoint}`)
-    const req = await fetch(`https://discord.com/api/v10${endpoint}`, {
+    let params = {
         method,
         headers: {
             ...headers,
             Authorization: `Bot ${process.env.TOKEN}`,
             'Content-Type': "application/json"
         },
-        body: JSON.stringify(body)
-    })
+    }
+
+    if (body !== null) params.body = JSON.stringify(body)
+
+    const req = await fetch(`https://discord.com/api/v10${endpoint}`, params)
 
     reqLogger.http(`Request to ${endpoint} returned ${req.status}`)
 

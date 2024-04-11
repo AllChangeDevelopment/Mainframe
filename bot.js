@@ -14,6 +14,9 @@ import unmute from "./handler/unmute.js";
 import warnings from "./handler/warnings.js";
 import feedback from "./handler/feedback.js";
 import finesse from "./handler/finesse.js";
+import request from "./request.js";
+
+let msgs = []
 
 /**
  * Connects to Discord Gateway and launches the bot.
@@ -55,7 +58,7 @@ export default function bot() {
                 if (!ident) {
                     con.send(JSON.stringify({op: 2, d: {
                         token: process.env.TOKEN,
-                        intents: 32769,
+                        intents: 33292,
                         properties: {
                             os: "darwin",
                             browser: "who knows",
@@ -64,7 +67,19 @@ export default function bot() {
                     }}))
 
                     gatewayLogger.verbose("Identify sent")
-                    ident = true
+                    ident = true;
+
+                    (async function() {
+                        gatewayLogger.info("Producing message cache...")
+                        let channels = await request("/guilds/1188194695873036398/channels")
+
+                        channels.forEach(async c => {
+                            let msgss = await request(`/channels/${c.id}/messages`)
+                            msgss.forEach(e => {
+                                msgs.push(e)
+                            })
+                        })
+                    })()
                 }
 
                 break
@@ -103,6 +118,48 @@ export default function bot() {
                             break
                         default:
                             throw new Error("Command not added to switch statement!")
+                    }
+                } else {
+                    if (message.t === "MESSAGE_DELETE") {
+                        try {
+                            (async function () {
+                                console.log("Deleted message:")
+
+                                msg = msgs.find(v => {
+                                    return v.id === message.d.id
+                                })
+                                console.log(msg)
+
+                                await request("/channels/1210340707588378634/messages", "POST", {}, {
+                                    embeds: [
+                                        {
+                                            title: "Message deleted",
+                                            fields: [
+                                                {name: "Author", value: msg.author.username},
+                                                {name: "Content", value: msg.content},
+                                            ]
+                                        }
+                                    ]
+                                })
+                            })()
+                        } catch {
+                            request("/channels/1210340707588378634/messages", "POST", {}, {
+                                embeds: [
+                                    {
+                                        title: "Message deleted",
+                                        fields: [
+                                            {name: "Author", value: "Unknown"},
+                                            {name: "Content", value: "Unknown"},
+                                        ]
+                                    }
+                                ]
+                            })
+                        }
+                    }
+                    else if (message.t === "AUDIT_LOG_ENTRY_CREATE") {
+                        console.log(message.d)
+                    } else if (message.t === "MESSAGE_CREATE") {
+                        msgs.push(message.d)
                     }
                 }
                 break
